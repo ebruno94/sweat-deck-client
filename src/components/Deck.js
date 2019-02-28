@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import SwipeableViews from 'react-swipeable-views';
 
 import Card from './Card';
 
@@ -13,9 +14,9 @@ class Deck extends Component {
       cards: [],
       position: 0,
       sliding: false,
-      direction: 'next'
+      direction: 'next',
+      currentCard: null
     }
-    this.nextCard = this.nextCard.bind(this);
   };
   
   componentDidMount(){
@@ -25,31 +26,6 @@ class Deck extends Component {
       newDeck.push(i);
     };
     this.setState({cards: newDeck});
-  }
-  
-  getOrder(cardIndex) {
-    const {position, cards} = this.state;
-    const numCards = cards.length || 1;
-    
-    if (cardIndex - position < 0){
-      return numCards - Math.abs(cardIndex - position);
-    }
-    
-    return cardIndex - position;
-  }
-  
-  nextCard(){
-    const {position, cards} = this.state;
-    const numCards = cards.length || 1;
-    
-    this.doSliding('next', position === numCards - 1 ? 0 : position + 1);
-  }
-  
-  prevCard() {
-    const {position, cards} = this.state;
-    const numCards = cards.length || 1;
-    
-    this.doSliding('prev', position === 0 ? numCards - 1 : position - 1);
   }
   
   doSliding(direction, position){
@@ -66,21 +42,50 @@ class Deck extends Component {
     }, 50);
   }
   
+  getOrder(cardIndex) {
+    const {position, cards} = this.state;
+    const numCards = cards.length || 1;
+    
+    if (cardIndex - position < 0){
+      return numCards - Math.abs(cardIndex - position);
+    }
+    
+    return cardIndex - position;
+  }
+  
+  handleSwipe(isNext){
+    if (isNext) {
+      this.nextCard();
+    } else {
+      this.prevCard();
+    };
+  };
+  
+  nextCard(){
+    const {position, cards} = this.state;
+    const numCards = cards.length || 1;
+    
+    this.doSliding('next', position === numCards - 1 ? 0 : position + 1);
+  }
+  
+  prevCard() {
+    const {position, cards} = this.state;
+    const numCards = cards.length || 1;
+    
+    this.doSliding('prev', position === 0 ? numCards - 1 : position - 1);
+  }
+
+
   render(){
     return(
       <div>
         <h1> This is the deck component </h1>
-          <Wrapper>
-            <CarouselContainer sliding={this.state.sliding} direction={this.state.direction}>
-            
-              {this.state.cards.map((card, index) => 
-                    <CarouselSlot key={index} order={this.getOrder(index)}> <Card key={index} num={card}/> </CarouselSlot>
-                )
-              }
-            </CarouselContainer>
-          </Wrapper>
-        <button onClick = {() => this.prevCard() }>Prev</button>
-        <button onClick = {() => this.nextCard() }>Next</button>
+          <SwipeableViews enableMouseEvents>
+                {this.state.cards.map((card, index) => 
+                      <CarouselSlot key={index} order={this.getOrder(index)}> <Card key={index} num={card}/> </CarouselSlot>
+                  )
+                }
+          </SwipeableViews>
       </div>
     )
   }
