@@ -6,7 +6,6 @@ const CarouselSlot = styled.div`
   margin-right: 20px;
   padding: 20px;
   order: ${(props) => props.order}
-  background-color: blue;
 `
 
 export default CarouselSlot;

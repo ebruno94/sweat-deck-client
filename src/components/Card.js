@@ -1,16 +1,19 @@
 import React from 'react';
-import {cardStyle} from './../css/card-style'
+
+import CardOutline from './../styled/CardOutline.js';
+import CardBody from './../styled/CardBody.js';
+import CardHeader from './../styled/CardHeader.js';
 
 export default function Card(props){
   return(
     <div>
-      <div style={cardStyle.card}>
-        <div style={cardStyle.header}>
-        </div>
-        <div style={cardStyle.body}>
+      <CardOutline>
+        <CardHeader>
+        </CardHeader>
+        <CardBody>
           {props.num}
-        </div>
-      </div>
+        </CardBody>
+      </CardOutline>
     </div>
   )
 }
