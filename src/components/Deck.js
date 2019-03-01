@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SwipeableViews from 'react-swipeable-views';
+import {Swipeable} from 'react-swipeable';
 
 import Card from './Card';
 
@@ -18,7 +18,7 @@ class Deck extends Component {
       currentCard: null
     }
   };
-  
+
   componentDidMount(){
     // Create API call here to fill Deck.
     let newDeck = [];
@@ -27,32 +27,32 @@ class Deck extends Component {
     };
     this.setState({cards: newDeck});
   }
-  
+
   doSliding(direction, position){
     this.setState({
       sliding: true,
       position,
       direction
     });
-    
+
     setTimeout(()=> {
       this.setState({
         sliding:false
       })
     }, 50);
   }
-  
+
   getOrder(cardIndex) {
     const {position, cards} = this.state;
     const numCards = cards.length || 1;
-    
+
     if (cardIndex - position < 0){
       return numCards - Math.abs(cardIndex - position);
     }
-    
+
     return cardIndex - position;
   }
-  
+
   handleSwipe(isNext){
     if (isNext) {
       this.nextCard();
@@ -60,19 +60,25 @@ class Deck extends Component {
       this.prevCard();
     };
   };
-  
+
   nextCard(){
     const {position, cards} = this.state;
     const numCards = cards.length || 1;
-    
+    console.log('next')
+
     this.doSliding('next', position === numCards - 1 ? 0 : position + 1);
   }
-  
+
   prevCard() {
     const {position, cards} = this.state;
     const numCards = cards.length || 1;
-    
+
     this.doSliding('prev', position === 0 ? numCards - 1 : position - 1);
+  }
+
+  setCurrentCard(card){
+    this.setState({currentCard: card});
+    console.log(this.state.currentCard);
   }
 
 
@@ -80,12 +86,20 @@ class Deck extends Component {
     return(
       <div>
         <h1> This is the deck component </h1>
-          <SwipeableViews enableMouseEvents>
-                {this.state.cards.map((card, index) => 
-                      <CarouselSlot key={index} order={this.getOrder(index)}> <Card key={index} num={card}/> </CarouselSlot>
-                  )
-                }
-          </SwipeableViews>
+        <Swipeable
+          onSwipedLeft={ () => this.handleSwipe(true) }
+          onSwipedRight={ () => this.handleSwipe() }>
+          <Wrapper>
+            <CarouselContainer
+              sliding={this.state.sliding}
+              direction={this.state.direction}>
+                    {this.state.cards.map((card, index) => (
+                          <CarouselSlot key={index} order={this.getOrder(index)}><Card key={index} num={card} onClick={() => console.log("currentCard", card)}/></CarouselSlot>
+                      ))
+                    }
+            </CarouselContainer>
+          </Wrapper>
+        </Swipeable>
       </div>
     )
   }
