@@ -8,6 +8,7 @@ const CardBody = styled.div`
   color: white;
   font-size: 36px;
   font-style: bold;
+  margin: 0 auto;
 `
 
 export default CardBody;
