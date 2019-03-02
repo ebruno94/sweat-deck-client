@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import {Swipeable} from 'react-swipeable';
+import Carousel from 'nuka-carousel';
 
 import Card from './Card';
-
-import CarouselContainer from './../styled/CarouselContainer';
-import CarouselSlot from './../styled/CarouselSlot';
-import Wrapper from './../styled/Wrapper';
+import {CarouselStyle} from './../css/carousel';
 
 class Deck extends Component {
   constructor(props) {
@@ -15,8 +12,9 @@ class Deck extends Component {
       position: 0,
       sliding: false,
       direction: 'next',
-      currentCard: null
+      currentCardIndex: 0,
     }
+    this.handleCardChange = this.handleCardChange.bind(this);
   };
 
   componentDidMount(){
@@ -28,78 +26,33 @@ class Deck extends Component {
     this.setState({cards: newDeck});
   }
 
-  doSliding(direction, position){
-    this.setState({
-      sliding: true,
-      position,
-      direction
-    });
-
-    setTimeout(()=> {
-      this.setState({
-        sliding:false
-      })
-    }, 50);
+  handleCardChange(i){
+    let card = this.state.cards[i];
+    this.setState({currentCardIndex: card})
   }
-
-  getOrder(cardIndex) {
-    const {position, cards} = this.state;
-    const numCards = cards.length || 1;
-
-    if (cardIndex - position < 0){
-      return numCards - Math.abs(cardIndex - position);
-    }
-
-    return cardIndex - position;
-  }
-
-  handleSwipe(isNext){
-    if (isNext) {
-      this.nextCard();
-    } else {
-      this.prevCard();
-    };
-  };
-
-  nextCard(){
-    const {position, cards} = this.state;
-    const numCards = cards.length || 1;
-    console.log('next')
-
-    this.doSliding('next', position === numCards - 1 ? 0 : position + 1);
-  }
-
-  prevCard() {
-    const {position, cards} = this.state;
-    const numCards = cards.length || 1;
-
-    this.doSliding('prev', position === 0 ? numCards - 1 : position - 1);
-  }
-
-  setCurrentCard(card){
-    this.setState({currentCard: card});
-    console.log(this.state.currentCard);
-  }
-
 
   render(){
     return(
-      <div>
+      <div style={CarouselStyle.carousel}>
         <h1> This is the deck component </h1>
-        <Swipeable
-          onSwipedLeft={ () => this.handleSwipe(true) }
-          onSwipedRight={ () => this.handleSwipe() }>
-          <Wrapper>
-            <CarouselContainer
-              sliding={this.state.sliding}
-              direction={this.state.direction}>
-                    {this.state.cards.map((card, index) => (
-                          <CarouselSlot key={index} order={this.getOrder(index)}><Card key={index} num={card} onClick={() => console.log("currentCard", card)}/></CarouselSlot>
-                      ))
-                    }
-            </CarouselContainer>
-          </Wrapper>
-        </Swipeable>
+          <Carousel
+            slideIndex={this.state.currentCardIndex}
+            wrapAround={true}
+            withoutControls={true}
+            slideWidth={0.9}
+            cellAlign="center"
+            transitionMode="scroll"
+            animation="zoom"
+            afterSlide={currentIndex => this.handleCardChange(currentIndex)}
+          >
+          {this.state.cards.map((card, i) => {
+            return (
+              <Card style={{width: '200px'}}
+                key={i} num={card}/>
+            )
+          })}
+        </Carousel>
+        {this.state.currentCardIndex}
       </div>
     )
   }

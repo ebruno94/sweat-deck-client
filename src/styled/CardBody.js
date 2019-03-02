@@ -9,6 +9,7 @@ const CardBody = styled.div`
   font-size: 36px;
   font-style: bold;
   margin: 0 auto;
+  textAlign: center;
 `
 
 export default CardBody;

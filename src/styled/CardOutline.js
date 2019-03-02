@@ -5,6 +5,8 @@ const CardOutline = styled.div`
   height: 400px;
   width: 300px;
   border-radius: 25px;
+  margin: 0 auto;
+  padding: 0;
 `
 
 export default CardOutline;

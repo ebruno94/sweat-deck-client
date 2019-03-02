@@ -4,7 +4,7 @@ import CardOutline from './../styled/CardOutline.js';
 import CardBody from './../styled/CardBody.js';
 import CardHeader from './../styled/CardHeader.js';
 
-export default function Card(props){
+const Card = (props) => {
   return(
     <div>
       <CardOutline>
@@ -21,3 +21,5 @@ export default function Card(props){
 // Card.propTypes = {
 //   num: PropTypes.number
 // }
+
+export default Card
