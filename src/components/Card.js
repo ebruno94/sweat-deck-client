@@ -7,13 +7,7 @@ import CardHeader from './../styled/CardHeader.js';
 const Card = (props) => {
   return(
     <div>
-      <CardOutline>
-        <CardHeader>
-        </CardHeader>
-        <CardBody>
-          {props.num}
-        </CardBody>
-      </CardOutline>
+      <img src={props.imgUrl} alt="random" style={{display: "block", margin: "auto"}}/>
     </div>
   )
 }
