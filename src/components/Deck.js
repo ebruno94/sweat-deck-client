@@ -32,25 +32,23 @@ class Deck extends Component {
   render(){
     return(
       <div style={CarouselStyle.carousel}>
-        <h1> This is the deck component </h1>
-          <Carousel
-            slideIndex={parseInt(this.state.currentCardIndex)}
-            wrapAround={true}
-            withoutControls={true}
-            slideWidth={0.9}
-            cellAlign="center"
-            transitionMode="scroll"
-            animation="zoom"
-            easing="easeLinear"
-            afterSlide={currentIndex => this.handleCardChange(currentIndex)}
-          >
+        <Carousel
+          slideIndex={parseInt(this.state.currentCardIndex)}
+          wrapAround={true}
+          withoutControls={true}
+          slideWidth={0.9}
+          cellAlign="center"
+          transitionMode="scroll"
+          animation="zoom"
+          easing="easeLinear"
+          afterSlide={currentIndex => this.handleCardChange(currentIndex)}
+        >
           {this.state.cards.map((card, i) => {
             return (
               <Card key={card.id} imgUrl={card.imgUrl} index={i}/>
             )
           })}
         </Carousel>
-        {this.state.currentCardIndex}
       </div>
     )
   }
