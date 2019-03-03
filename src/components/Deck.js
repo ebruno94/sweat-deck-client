@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Carousel from 'nuka-carousel';
+import axios from 'axios';
 
 import Card from './Card';
 import {CarouselStyle} from './../css/carousel';
@@ -9,9 +10,6 @@ class Deck extends Component {
     super(props);
     this.state = {
       cards: [],
-      position: 0,
-      sliding: false,
-      direction: 'next',
       currentCardIndex: 0,
     }
     this.handleCardChange = this.handleCardChange.bind(this);
@@ -19,16 +17,16 @@ class Deck extends Component {
 
   componentDidMount(){
     // Create API call here to fill Deck.
-    let newDeck = [];
-    for (let i = 0; i <= 53; i++){
-      newDeck.push(i);
-    };
-    this.setState({cards: newDeck});
+    axios.get('/cards').then(res => {
+      if (res.data && this.state.cards.length === 0){
+        let sortedCards = res.data.map((card) => card.imgUrl).sort((a,b) => parseInt(a.slice(86,88)) - parseInt(b.slice(86,88)));
+        this.setState({cards: sortedCards})
+      }
+    }).catch((e) => console.log(e));
   }
 
   handleCardChange(i){
-    let card = this.state.cards[i];
-    this.setState({currentCardIndex: card})
+    this.setState({currentCardIndex: i})
   }
 
   render(){
@@ -36,19 +34,16 @@ class Deck extends Component {
       <div style={CarouselStyle.carousel}>
         <h1> This is the deck component </h1>
           <Carousel
-            slideIndex={this.state.currentCardIndex}
+            slideIndex={parseInt(this.state.currentCardIndex)}
             wrapAround={true}
             withoutControls={true}
             slideWidth={0.9}
             cellAlign="center"
-            transitionMode="scroll"
-            animation="zoom"
             afterSlide={currentIndex => this.handleCardChange(currentIndex)}
           >
           {this.state.cards.map((card, i) => {
             return (
-              <Card style={{width: '200px'}}
-                key={i} num={card}/>
+              <Card key={i} imgUrl={card}/>
             )
           })}
         </Carousel>
