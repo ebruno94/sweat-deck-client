@@ -1,9 +1,10 @@
 const carousel = {
-  width: "50%",
+  width: "500px",
+  height: "250px",
   margin: "auto",
-  backgroundColor: "gray",
-  paddingTop: "50px",
-  paddingBottom: "50px"
+  paddingTop: "60px",
+  paddingBottom: "60px",
+  borderRadius: "17px 17px 17px 17px"
 }
 
 export const CarouselStyle = {
