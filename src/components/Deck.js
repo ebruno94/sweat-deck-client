@@ -36,7 +36,8 @@ class Deck extends Component {
           slideIndex={parseInt(this.state.currentCardIndex)}
           wrapAround={true}
           withoutControls={true}
-          slideWidth={0.9}
+          slideWidth={0.7}
+          speed={250}
           cellAlign="center"
           transitionMode="scroll"
           animation="zoom"
