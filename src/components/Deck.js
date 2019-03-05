@@ -3,6 +3,7 @@ import Carousel from 'nuka-carousel';
 import axios from 'axios';
 
 import Card from './Card';
+import Button from './Button';
 import {CarouselStyle} from './../css/carousel';
 
 class Deck extends Component {
@@ -11,8 +12,12 @@ class Deck extends Component {
     this.state = {
       cards: [],
       currentCardIndex: 0,
+      autoplayToggle: false,
+      currentCard: {},
     }
-    this.handleCardChange = this.handleCardChange.bind(this);
+    this.handleIndexChange = this.handleIndexChange.bind(this);
+    this.handleRandomButton = this.handleRandomButton.bind(this);
+    this.handleCurrentCard = this.handleCurrentCard.bind(this);
   };
 
   componentDidMount(){
@@ -25,9 +30,33 @@ class Deck extends Component {
     }).catch((e) => console.log(e));
   }
 
-  handleCardChange(i){
+  handleIndexChange(i){
     this.setState({currentCardIndex: i})
   }
+
+  handleRandomButton(){
+    this.setState({autoplayToggle: true})
+
+    var {cards, currentCardIndex} = this.state
+    var randomSeconds = (Math.floor(Math.random() * 5) + 1) * 1000;
+    var randomIndex = Math.floor(Math.random() * 52)
+    setTimeout(() => {
+      this.setState({currentCardIndex: randomIndex, autoplayToggle: false})
+    }, randomSeconds);
+  }
+
+  async handleCurrentCard(){
+    var {cards, currentCardIndex} = this.state
+    const card = await axios.get(`/cards/${cards[currentCardIndex].id}`)
+    console.log(card.data);
+
+    try {
+      this.setState({currentCard: card.data});
+    } catch (e) {
+      console.log('something went wrong');
+    }
+  }
+
 
   render(){
     return(
@@ -40,9 +69,13 @@ class Deck extends Component {
           speed={250}
           cellAlign="center"
           transitionMode="scroll"
-          animation="zoom"
+          animation={(!this.state.autoplayToggle) ? "zoom" : ""}
           easing="easeLinear"
-          afterSlide={currentIndex => this.handleCardChange(currentIndex)}
+          autoplay={this.state.autoplayToggle}
+          autoplayInterval={10}
+          pauseOnHover={false}
+          afterSlide={currentIndex => {
+            this.handleIndexChange(currentIndex)}}
         >
           {this.state.cards.map((card, i) => {
             return (
@@ -50,6 +83,10 @@ class Deck extends Component {
             )
           })}
         </Carousel>
+        <div>
+            <Button buttonName="RANDOM" buttonFunc={this.handleRandomButton}/>
+            <Button buttonName="SELECT" buttonFunc={this.handleCurrentCard}/>
+        </div>
       </div>
     )
   }
