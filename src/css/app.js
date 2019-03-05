@@ -20,10 +20,22 @@ const footer = {
   width: "100%",
   backgroundColor: "black",
   color: "white",
-  textAlign: "center"
+  textAlign: "center",
+  letterSpacing: "3px",
+  fontSize: "25px"
+}
+
+const message = {
+  fontSize: "40px",
+  display: "flex",
+  justifyContent: "center",
+  marginTop: "50px",
+  color: "white",
+  fontFamily: "BebasBold"
 }
 
 export const AppStyle = {
   container,
-  footer
+  footer,
+  message
 }

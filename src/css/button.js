@@ -4,13 +4,14 @@ const main = {
   width: "150px",
   display: "inline",
   margin: "auto",
-  marginLeft: "50px",
-  marginRight: "50px",
   marginTop:"50px",
   border: "2px solid black",
   borderRadius: "10px",
   color: "white",
   textDecoration: "none",
+  fontFamily: "BebasBold",
+  letterSpacing: "4px",
+  fontSize: "26px"
 }
 
 const mainHover = { ...main,
