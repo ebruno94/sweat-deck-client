@@ -61,42 +61,49 @@ class Deck extends Component {
 
 
   render(){
-    const display = (!this.state.autoplayToggle) ? <div style={{display:'flex', justifyContent: 'center'}}>
+    const displayBottom = (!this.state.autoplayToggle) ? <div style={{display:'flex', justifyContent: 'center', marginTop: '90px'}}>
       <div style={{margin: 'auto'}}>
         <Button buttonName="RANDOM" buttonFunc={this.handleRandomButton}/>
       </div>
       <div style={{margin: 'auto'}}>
-        <Button buttonName="SELECT" buttonFunc={this.handleCurrentCard}/>
+        <Button buttonName="CONFIRM" buttonFunc={this.handleCurrentCard}/>
       </div>
     </div>
     :
-    <div style={AppStyle.message}> PICKING A CARD... </div>
+    <div style={{... AppStyle.message, marginTop: '125px'}}> PLEASE WAIT... </div>
+
+    const displayTop = (this.state.autoplayToggle) ? 'PICKING RANDOMLY' : 'SELECT A CARD'
+    const displaySub = (this.state.autoplayToggle) ? 'Make sure you warm up first' : '(Please swipe left or right to navigate through the deck)'
 
     return(
-      <div style={CarouselStyle.carousel}>
-        <Carousel
-          slideIndex={parseInt(this.state.currentCardIndex)}
-          wrapAround={true}
-          withoutControls={true}
-          slideWidth={0.7}
-          speed={250}
-          cellAlign="center"
-          transitionMode="scroll"
-          animation={(!this.state.autoplayToggle) ? "zoom" : ""}
-          easing="easeLinear"
-          autoplay={this.state.autoplayToggle}
-          autoplayInterval={10}
-          pauseOnHover={false}
-          afterSlide={currentIndex => {
-            this.handleIndexChange(currentIndex)}}
-        >
-          {this.state.cards.map((card, i) => {
-            return (
-              <Card key={card.id} imgUrl={card.imgUrl} index={i}/>
-            )
-          })}
-        </Carousel>
-        {display}
+      <div>
+        <div style={AppStyle.message}>{displayTop}</div>
+        <div style={AppStyle.subtitle}>{displaySub}</div>
+        <div style={CarouselStyle.carousel}>
+          <Carousel
+            slideIndex={parseInt(this.state.currentCardIndex)}
+            wrapAround={true}
+            withoutControls={true}
+            slideWidth={0.9}
+            speed={250}
+            cellAlign="center"
+            transitionMode="scroll"
+            animation={(!this.state.autoplayToggle) ? "zoom" : ""}
+            easing="easeLinear"
+            autoplay={this.state.autoplayToggle}
+            autoplayInterval={10}
+            pauseOnHover={false}
+            afterSlide={currentIndex => {
+              this.handleIndexChange(currentIndex)}}
+          >
+            {this.state.cards.map((card, i) => {
+              return (
+                <Card key={card.id} imgUrl={card.imgUrl} index={i}/>
+              )
+            })}
+          </Carousel>
+        </div>
+        {displayBottom}
       </div>
     )
   }

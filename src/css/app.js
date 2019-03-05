@@ -29,13 +29,22 @@ const message = {
   fontSize: "40px",
   display: "flex",
   justifyContent: "center",
-  marginTop: "50px",
+  marginTop: "25px",
   color: "white",
   fontFamily: "BebasBold"
+}
+
+const subtitle = {
+  ...message,
+  fontSize: "20px",
+  marginTop: "0px",
+  marginBottom: "0px",
+  fontFamily: "BebasBook"
 }
 
 export const AppStyle = {
   container,
   footer,
-  message
+  message,
+  subtitle
 }
