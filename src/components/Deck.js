@@ -4,7 +4,9 @@ import axios from 'axios';
 
 import Card from './Card';
 import Button from './Button';
+
 import {CarouselStyle} from './../css/carousel';
+import {AppStyle} from './../css/app';
 
 class Deck extends Component {
   constructor(props) {
@@ -59,6 +61,17 @@ class Deck extends Component {
 
 
   render(){
+    const display = (!this.state.autoplayToggle) ? <div style={{display:'flex', justifyContent: 'center'}}>
+      <div style={{margin: 'auto'}}>
+        <Button buttonName="RANDOM" buttonFunc={this.handleRandomButton}/>
+      </div>
+      <div style={{margin: 'auto'}}>
+        <Button buttonName="SELECT" buttonFunc={this.handleCurrentCard}/>
+      </div>
+    </div>
+    :
+    <div style={AppStyle.message}> PICKING A CARD... </div>
+
     return(
       <div style={CarouselStyle.carousel}>
         <Carousel
@@ -83,10 +96,7 @@ class Deck extends Component {
             )
           })}
         </Carousel>
-        <div>
-            <Button buttonName="RANDOM" buttonFunc={this.handleRandomButton}/>
-            <Button buttonName="SELECT" buttonFunc={this.handleCurrentCard}/>
-        </div>
+        {display}
       </div>
     )
   }
