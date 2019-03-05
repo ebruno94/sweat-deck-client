@@ -1,7 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 
-import {ButtonStyle} from './../css/button.js';
 import Button from './Button';
 
 const mainLogo = require('./../assets/white_logo_transparent.png');
