@@ -4,7 +4,7 @@ const carousel = {
   margin: "auto",
   paddingTop: "60px",
   paddingBottom: "60px",
-  borderRadius: "17px 17px 17px 17px"
+  borderRadius: "17px 17px 17px 17px",
 }
 
 export const CarouselStyle = {

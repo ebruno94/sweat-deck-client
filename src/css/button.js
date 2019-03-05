@@ -2,12 +2,15 @@ const main = {
   backgroundColor: "#FC6000",
   height: "50px",
   width: "150px",
-  display: "block",
+  display: "inline",
   margin: "auto",
+  marginLeft: "50px",
+  marginRight: "50px",
+  marginTop:"50px",
   border: "2px solid black",
   borderRadius: "10px",
   color: "white",
-  textDecoration: "none"
+  textDecoration: "none",
 }
 
 const mainHover = { ...main,
