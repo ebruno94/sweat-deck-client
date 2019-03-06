@@ -26,7 +26,7 @@ class Deck extends Component {
     axios.get('/cards').then(res => {
       if (res.data && this.state.cards.length === 0){
         let sortedCards = res.data.map(card => ({id: card._id, imgUrl: card.imgUrl})).sort((a,b) => parseInt(a.imgUrl.slice(86,88)) - parseInt(b.imgUrl.slice(86,88)))
-        this.setState({cards: sortedCards})
+        this.setState({cards: sortedCards, currentCard: res.data[0]})
       }
     }).catch((e) => console.log(e));
   }
@@ -41,12 +41,13 @@ class Deck extends Component {
     this.setState({autoplayToggle: true, currentCardIndex: startingIndex})
     setTimeout(() => {
       this.setState({autoplayToggle: false});
-    }, 500);
+    }, 1500);
   }
 
   async handleCurrentCard(i){
-    var {cards} = this.state
-    const card = await axios.get(`/cards/${cards[i].id}`)
+    var {cards} = this.state;
+    const card = await axios.get(`/cards/${cards[i].id}`);
+    console.log(card.data)
 
     try {
       this.setState({currentCard: card.data, currentCardIndex: i});
@@ -55,14 +56,13 @@ class Deck extends Component {
     }
   }
 
-
   render(){
     const displayBottom = (!this.state.autoplayToggle) ? <div style={{display:'flex', justifyContent: 'center', marginTop: '110px'}}>
       <div style={{margin: 'auto'}}>
         <Button buttonName="RANDOM" buttonFunc={this.handleRandomButton}/>
       </div>
       <div style={{margin: 'auto'}}>
-        <Button buttonName="CONFIRM" buttonFunc={this.handleCurrentCard}/>
+        <Button buttonName="CONFIRM" linkTo='start'/>
       </div>
     </div>
     :
@@ -81,15 +81,13 @@ class Deck extends Component {
             wrapAround={true}
             withoutControls={true}
             slideWidth={0.9}
-            speed={250}
+            speed={500}
             cellAlign="center"
             animation={(!this.state.autoplayToggle) ? "zoom" : {}}
             easing="easeLinear"
             autoplay={this.state.autoplayToggle}
             autoplayInterval={10}
-            afterSlide={currentIndex => {;
-              this.handleCurrentCard(currentIndex);
-            }}
+            afterSlide={currentIndex => this.handleCurrentCard(currentIndex)}
           >
             {this.state.cards.map((card, i) => {
               return (
