@@ -4,7 +4,7 @@ const main = {
   width: "150px",
   display: "inline",
   margin: "auto",
-  marginTop:"50px",
+  marginTop:"20px",
   border: "2px solid black",
   borderRadius: "10px",
   color: "white",
