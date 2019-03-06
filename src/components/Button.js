@@ -23,7 +23,7 @@ class Button extends Component {
     const { buttonFunc } = this.props;
     var display;
 
-    if (name === 'LAUNCH'){
+    if (linkTo){
       display =
       <Link style={{display: 'block', textDecoration: 'none', width: '150px', margin: 'auto'}} to={`/${linkTo}`}>
         <button type='button' style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main} onMouseEnter={this.buttonHoverToggle} onMouseLeave={this.buttonHoverToggle}>{name}</button>
