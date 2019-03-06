@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {AppStyle} from './css/app';
 import Deck from './components/Deck';
 import Welcome from './components/Welcome';
+import SignIn from './components/SignIn';
 
 class App extends Component {
   render() {
