@@ -17,7 +17,6 @@ class Deck extends Component {
       autoplayToggle: false,
       currentCard: {},
     }
-    this.handleIndexChange = this.handleIndexChange.bind(this);
     this.handleRandomButton = this.handleRandomButton.bind(this);
     this.handleCurrentCard = this.handleCurrentCard.bind(this);
   };
@@ -32,28 +31,25 @@ class Deck extends Component {
     }).catch((e) => console.log(e));
   }
 
-  handleIndexChange(i){
-    this.setState({currentCardIndex: i})
-  }
 
   handleRandomButton(){
-    this.setState({autoplayToggle: true})
-
     var {cards, currentCardIndex} = this.state
-    var randomSeconds = (Math.floor(Math.random() * 5) + 1) * 1000;
-    var randomIndex = Math.floor(Math.random() * 52)
+    var random = Math.floor(Math.random() * 26);
+    var randomStartingIndex = currentCardIndex + random;
+    var startingIndex = (randomStartingIndex > 52) ? randomStartingIndex % 52 : randomStartingIndex;
+    console.log(`CurrentIndex: ${currentCardIndex} Random ${random}, randStartIn ${randomStartingIndex}, startinIn ${startingIndex}`);
+    this.setState({autoplayToggle: true, currentCardIndex: startingIndex})
     setTimeout(() => {
-      this.setState({currentCardIndex: randomIndex, autoplayToggle: false})
-    }, randomSeconds);
+      this.setState({autoplayToggle: false});
+    }, 500);
   }
 
-  async handleCurrentCard(){
-    var {cards, currentCardIndex} = this.state
-    const card = await axios.get(`/cards/${cards[currentCardIndex].id}`)
-    console.log(card.data);
+  async handleCurrentCard(i){
+    var {cards} = this.state
+    const card = await axios.get(`/cards/${cards[i].id}`)
 
     try {
-      this.setState({currentCard: card.data});
+      this.setState({currentCard: card.data, currentCardIndex: i});
     } catch (e) {
       console.log('something went wrong');
     }
@@ -61,7 +57,7 @@ class Deck extends Component {
 
 
   render(){
-    const displayBottom = (!this.state.autoplayToggle) ? <div style={{display:'flex', justifyContent: 'center', marginTop: '90px'}}>
+    const displayBottom = (!this.state.autoplayToggle) ? <div style={{display:'flex', justifyContent: 'center', marginTop: '110px'}}>
       <div style={{margin: 'auto'}}>
         <Button buttonName="RANDOM" buttonFunc={this.handleRandomButton}/>
       </div>
@@ -81,20 +77,19 @@ class Deck extends Component {
         <div style={AppStyle.subtitle}>{displaySub}</div>
         <div style={CarouselStyle.carousel}>
           <Carousel
-            slideIndex={parseInt(this.state.currentCardIndex)}
+            slideIndex={this.state.currentCardIndex}
             wrapAround={true}
             withoutControls={true}
             slideWidth={0.9}
             speed={250}
             cellAlign="center"
-            transitionMode="scroll"
-            animation={(!this.state.autoplayToggle) ? "zoom" : ""}
+            animation={(!this.state.autoplayToggle) ? "zoom" : {}}
             easing="easeLinear"
             autoplay={this.state.autoplayToggle}
             autoplayInterval={10}
-            pauseOnHover={false}
-            afterSlide={currentIndex => {
-              this.handleIndexChange(currentIndex)}}
+            afterSlide={currentIndex => {;
+              this.handleCurrentCard(currentIndex);
+            }}
           >
             {this.state.cards.map((card, i) => {
               return (
