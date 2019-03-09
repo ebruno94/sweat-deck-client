@@ -16,6 +16,7 @@ class Deck extends Component {
       currentCardIndex: 0,
       autoplayToggle: false,
       currentCard: {},
+      currentUser: {}
     }
     this.handleRandomButton = this.handleRandomButton.bind(this);
     this.handleCurrentCard = this.handleCurrentCard.bind(this);
@@ -52,7 +53,7 @@ class Deck extends Component {
     try {
       this.setState({currentCard: card.data, currentCardIndex: i});
     } catch (e) {
-      console.log('something went wrong');
+      console.log('something went wrong', e);
     }
   }
 
