@@ -34,7 +34,7 @@ class Deck extends Component {
 
 
   handleRandomButton(){
-    var {cards, currentCardIndex} = this.state
+    var {currentCardIndex} = this.state
     var random = Math.floor(Math.random() * 26);
     var randomStartingIndex = currentCardIndex + random;
     var startingIndex = (randomStartingIndex > 52) ? randomStartingIndex % 52 : randomStartingIndex;
@@ -48,7 +48,6 @@ class Deck extends Component {
   async handleCurrentCard(i){
     var {cards} = this.state;
     const card = await axios.get(`/cards/${cards[i].id}`);
-    console.log(card.data)
 
     try {
       this.setState({currentCard: card.data, currentCardIndex: i});
@@ -67,7 +66,7 @@ class Deck extends Component {
       </div>
     </div>
     :
-    <div style={{... AppStyle.message, marginTop: '125px'}}> PLEASE WAIT... </div>
+    <div style={{...AppStyle.message, marginTop: '125px'}}> PLEASE WAIT... </div>
 
     const displayTop = (this.state.autoplayToggle) ? 'PICKING RANDOMLY' : 'SELECT A CARD'
     const displaySub = (this.state.autoplayToggle) ? 'Make sure you warm up first' : '(Please swipe left or right to navigate through the deck)'
