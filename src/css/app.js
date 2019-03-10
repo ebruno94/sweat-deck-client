@@ -59,6 +59,17 @@ const form = {
   borderRadius: "10px"
 }
 
+const regForm = {
+  ...form,
+  height: "550px",
+  margin: "auto",
+  marginTop: "20px",
+  width: "450px",
+  boxShadow: "0px 0px 5px inset white",
+  border: "1px solid black",
+  paddingBottom: "0px"
+}
+
 const input = {
   fontFamily: "BebasBook",
   letterSpacing: "2px",
@@ -70,11 +81,22 @@ const input = {
   color: "black"
 }
 
+const line = {
+  width: '400px',
+  height: '2px',
+  backgroundColor:'#1d1d1e',
+  borderColor: '#1d1d1e',
+  border: '0px',
+  marginBottom: '6px'
+}
+
 export const AppStyle = {
   container,
   footer,
   message,
   subtitle,
   form,
-  input
+  regForm,
+  input,
+  line,
 }
