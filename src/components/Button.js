@@ -8,7 +8,7 @@ class Button extends Component {
     this.state = {
       linkTo: this.props.linkTo,
       isHovered: false,
-      name: this.props.buttonName,
+      buttonName: this.props.buttonName,
     }
     this.buttonHoverToggle = this.buttonHoverToggle.bind(this);
   };
@@ -19,21 +19,24 @@ class Button extends Component {
   }
 
   render(){
-    const { linkTo, isHovered, name } = this.state;
+    const { linkTo, isHovered, buttonName, type } = this.state;
     const { buttonFunc } = this.props;
     var display;
 
     if (linkTo){
       display =
-      <Link style={{display: 'block', textDecoration: 'none', width: '150px', margin: 'auto'}} to={`/${linkTo}`}>
-        <button type='button' style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main} onMouseEnter={this.buttonHoverToggle} onMouseLeave={this.buttonHoverToggle}>{name}</button>
+      <Link style={{display: 'block', textDecoration: 'none', width: '150px', margin: 'auto'}} to={`${linkTo}`}>
+        <button type='button' style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main} onMouseEnter={this.buttonHoverToggle} onMouseLeave={this.buttonHoverToggle}>{buttonName}</button>
       </Link>
+    } else if (type === 'submit'){
+      display =
+      <button type='submit' style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main} onMouseEnter={this.buttonHoverToggle} onMouseLeave={this.buttonHoverToggle}>{buttonName}</button>
     } else {
       display = <button type='button'
         style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main}
         onMouseEnter={this.buttonHoverToggle}
         onMouseLeave={this.buttonHoverToggle}
-        onClick={buttonFunc}>{name}</button>
+        onClick={buttonFunc}>{buttonName}</button>
     }
 
     return (
