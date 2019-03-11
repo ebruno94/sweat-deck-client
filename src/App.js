@@ -18,7 +18,17 @@ class App extends Component {
   }
 
   handleRegistration(newUser){
-
+    axios.post('/users', {
+      firstName: newUser.firstName,
+      lastName: newUser.lastName,
+      age: newUser.age,
+      email: newUser.email,
+      password: newUser.password,
+      admin: false,
+      workoutRecord: []
+    }).then((res) => {
+      console.log('User added successfully', newUser.firstName)
+    }).catch( e => console.log('Something went wrong', e));
   }
 
   render() {
@@ -28,7 +38,7 @@ class App extends Component {
           <div style={AppStyle.container}>
             <Route exact path='/' component={Welcome}></Route>
             <Route exact path='/deck' component={Deck}></Route>
-            <Route exact path='/register' render={() => <Register/>}></Route>
+            <Route exact path='/register' render={() => <Register onRegister={this.handleRegistration}/>}></Route>
           </div>
         </Router>
         <div style={AppStyle.footer}>
