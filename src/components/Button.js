@@ -9,6 +9,7 @@ class Button extends Component {
       linkTo: this.props.linkTo,
       isHovered: false,
       buttonName: this.props.buttonName,
+      type: this.props.type
     }
     this.buttonHoverToggle = this.buttonHoverToggle.bind(this);
   };
