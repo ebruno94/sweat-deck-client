@@ -61,10 +61,10 @@ const form = {
 
 const regForm = {
   ...form,
-  height: "550px",
+  height: "575px",
   margin: "auto",
-  marginTop: "20px",
-  width: "450px",
+  marginTop: "10px",
+  width: "475px",
   boxShadow: "0px 0px 5px inset white",
   border: "1px solid black",
   paddingBottom: "0px"
@@ -79,6 +79,12 @@ const input = {
   width: "200px",
   height: "20px",
   color: "black"
+}
+
+const inputError = {
+  ...input,
+  border: "2px solid red",
+  boxShadow: "0px 0px 10px red"
 }
 
 const line = {
@@ -98,5 +104,6 @@ export const AppStyle = {
   form,
   regForm,
   input,
+  inputError,
   line,
 }
