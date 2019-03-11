@@ -14,7 +14,13 @@ class App extends Component {
       signedIn: false,
       currentUser: null,
     }
+    this.handleRegistration = this.handleRegistration.bind(this);
   }
+
+  handleRegistration(newUser){
+
+  }
+
   render() {
     return (
       <div>
