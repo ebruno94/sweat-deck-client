@@ -15,7 +15,8 @@ class App extends Component {
       currentUser: null,
     }
     this.handleRegistration = this.handleRegistration.bind(this);
-  }
+    this.handleSignIn = this.handleSignIn.bind(this);
+  };
 
   handleRegistration(newUser){
     axios.post('/users', {
@@ -29,14 +30,19 @@ class App extends Component {
     }).then((res) => {
       console.log('User added successfully', newUser.firstName)
     }).catch( e => console.log('Something went wrong', e));
-  }
+  };
+
+  handleSignIn(user){
+    console.log('Sign In Successful!')
+    this.setState({signedIn: true, currentUser: user});
+  };
 
   render() {
     return (
       <div>
         <Router>
           <div style={AppStyle.container}>
-            <Route exact path='/' component={Welcome}></Route>
+            <Route exact path='/' render={(props)=> <Welcome {...props} onSignIn={this.handleSignIn}/>}></Route>
             <Route exact path='/deck' component={Deck}></Route>
             <Route exact path='/register' render={() => <Register onRegister={this.handleRegistration}/>}></Route>
           </div>
@@ -46,7 +52,7 @@ class App extends Component {
         </div>
       </div>
     );
-  }
-}
+  };
+};
 
 export default App;
