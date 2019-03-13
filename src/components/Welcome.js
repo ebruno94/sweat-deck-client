@@ -2,7 +2,6 @@ import React from 'react';
 
 import FancyLink from './FancyLink';
 import SignIn from './SignIn';
-import Timer from './Timer';
 
 const mainLogo = require('./../assets/white_logo_transparent.png');
 
