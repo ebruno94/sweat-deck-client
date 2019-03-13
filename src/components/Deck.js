@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import Card from './Card';
 import Button from './Button';
+import Workout from './Workout';
 
 import {CarouselStyle} from './../css/carousel';
 import {AppStyle} from './../css/app';
@@ -15,11 +16,13 @@ class Deck extends Component {
       cards: [],
       currentCardIndex: 0,
       autoplayToggle: false,
-      currentCard: {},
-      currentUser: {}
+      currentCard: null,
+      currentUser: {},
+      cardSelected: false
     }
     this.handleRandomButton = this.handleRandomButton.bind(this);
     this.handleCurrentCard = this.handleCurrentCard.bind(this);
+    this.handleCardSelect = this.handleCardSelect.bind(this);
   };
 
   componentDidMount(){
@@ -30,7 +33,7 @@ class Deck extends Component {
         this.setState({cards: sortedCards, currentCard: res.data[0]})
       }
     }).catch((e) => console.log(e));
-  }
+  };
 
 
   handleRandomButton(){
@@ -43,7 +46,11 @@ class Deck extends Component {
     setTimeout(() => {
       this.setState({autoplayToggle: false});
     }, 1500);
-  }
+  };
+
+  handleCardSelect(){
+    this.setState({cardSelected: true});
+  };
 
   async handleCurrentCard(i){
     var {cards} = this.state;
@@ -54,15 +61,16 @@ class Deck extends Component {
     } catch (e) {
       console.log('something went wrong', e);
     }
-  }
+  };
 
   render(){
+
     const displayBottom = (!this.state.autoplayToggle) ? <div style={{display:'flex', justifyContent: 'center', marginTop: '110px'}}>
       <div style={{margin: 'auto'}}>
         <Button buttonName="RANDOM" buttonFunc={this.handleRandomButton}/>
       </div>
       <div style={{margin: 'auto'}}>
-        <Button buttonName="CONFIRM" linkTo='start'/>
+        <Button buttonName="CONFIRM" buttonFunc={this.handleCardSelect}/>
       </div>
     </div>
     :
@@ -71,32 +79,44 @@ class Deck extends Component {
     const displayTop = (this.state.autoplayToggle) ? 'PICKING RANDOMLY' : 'SELECT A CARD'
     const displaySub = (this.state.autoplayToggle) ? 'Make sure you warm up first' : '(Please swipe left or right to navigate through the deck)'
 
+    let display;
+
+    if (!this.state.cardSelected){
+      display =
+          <div>
+            <div style={AppStyle.message}>{displayTop}</div>
+              <div style={AppStyle.subtitle}>{displaySub}</div>
+                <div style={CarouselStyle.carousel}>
+                  <Carousel
+                  slideIndex={this.state.currentCardIndex}
+                  wrapAround={true}
+                  withoutControls={true}
+                  slideWidth={0.9}
+                  speed={500}
+                  cellAlign="center"
+                  animation={(!this.state.autoplayToggle) ? "zoom" : {}}
+                  easing="easeLinear"
+                  autoplay={this.state.autoplayToggle}
+                  autoplayInterval={10}
+                  afterSlide={currentIndex => this.handleCurrentCard(currentIndex)}
+                  >
+                  {this.state.cards.map((card, i) => {
+                    return (
+                      <Card key={card.id} imgUrl={card.imgUrl} index={i}/>
+                    )
+                  })}
+                  </Carousel>
+                </div>
+            {displayBottom}
+          </div>
+    } else {
+      display =
+        <Workout currentCard={this.state.currentCard}/>
+    }
+
     return(
       <div>
-        <div style={AppStyle.message}>{displayTop}</div>
-        <div style={AppStyle.subtitle}>{displaySub}</div>
-        <div style={CarouselStyle.carousel}>
-          <Carousel
-            slideIndex={this.state.currentCardIndex}
-            wrapAround={true}
-            withoutControls={true}
-            slideWidth={0.9}
-            speed={500}
-            cellAlign="center"
-            animation={(!this.state.autoplayToggle) ? "zoom" : {}}
-            easing="easeLinear"
-            autoplay={this.state.autoplayToggle}
-            autoplayInterval={10}
-            afterSlide={currentIndex => this.handleCurrentCard(currentIndex)}
-          >
-            {this.state.cards.map((card, i) => {
-              return (
-                <Card key={card.id} imgUrl={card.imgUrl} index={i}/>
-              )
-            })}
-          </Carousel>
-        </div>
-        {displayBottom}
+        {display}
       </div>
     )
   }
