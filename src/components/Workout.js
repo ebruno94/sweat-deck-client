@@ -33,6 +33,7 @@ class Workout extends Component{
       workoutFinish: false,
       saveClicked: false,
       notSaveClicked: false,
+      time: '',
     }
     this.handleWorkoutStart = this.handleWorkoutStart.bind(this);
     this.handleWorkoutFinish = this.handleWorkoutFinish.bind(this);
@@ -44,12 +45,13 @@ class Workout extends Component{
     this.setState({workoutStart: true})
   }
 
-  handleWorkoutFinish() {
-    this.setState({workoutFinish: true, workoutStart: false});
+  handleWorkoutFinish(m, s) {
+    this.setState({workoutFinish: true, workoutStart: false, time: `${m} mins. ${s} secs.`});
   };
 
   handleSave(){
     this.setState({saveClicked: true});
+    this.props.onSave(this.state.time);
     setTimeout(this.props.onSaveUnSave, 2000);
   }
 

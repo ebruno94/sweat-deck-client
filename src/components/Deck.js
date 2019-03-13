@@ -23,6 +23,7 @@ class Deck extends Component {
     this.handleRandomButton = this.handleRandomButton.bind(this);
     this.handleCurrentCard = this.handleCurrentCard.bind(this);
     this.handleCardSelect = this.handleCardSelect.bind(this);
+    this.handleWorkoutSave = this.handleWorkoutSave.bind(this);
   };
 
   componentDidMount(){
@@ -53,6 +54,10 @@ class Deck extends Component {
     this.setState({cardSelected: !cardSelected});
     console.log(this.state);
   };
+
+  handleWorkoutSave(time){
+    console.log('Saving..', time)
+  }
 
   async handleCurrentCard(i){
     var {cards} = this.state;
@@ -113,7 +118,7 @@ class Deck extends Component {
           </div>
     } else {
       display =
-        <Workout onSaveUnSave={this.handleCardSelect} currentCard={this.state.currentCard}/>
+        <Workout onSave={this.handleWorkoutSave} onSaveUnSave={this.handleCardSelect} currentCard={this.state.currentCard}/>
     }
 
     return(

@@ -39,7 +39,10 @@ class Timer extends Component {
   }
 
   handleFinish(){
-    this.props.onWorkoutFinish();
+    this.setState({isOn: false})
+    const {minutes, seconds} = this.state
+    this.props.onWorkoutFinish(minutes, seconds);
+    console.log(`Finished in ${minutes} mins. and ${seconds} secs.`)
   }
 
   render() {
