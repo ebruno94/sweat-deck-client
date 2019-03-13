@@ -6,11 +6,9 @@ const timerStyle = {
   backgroundColor: 'black',
   color: 'white',
   height: '160px',
-  margin: 'auto',
-  border: '3px solid black',
+  border: '5px solid black',
   borderRadius: '0px 0px 15px 15px',
-  display: 'block',
-  justifyContent: 'center'
+  boxShadow: '-2px 0px 5px black'
 }
 
 class Timer extends Component {
@@ -23,7 +21,7 @@ class Timer extends Component {
     }
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
-    this.resetTimer = this.stopTimer.bind(this);
+    this.resetTimer = this.resetTimer.bind(this);
   }
 
   startTimer(){
@@ -45,7 +43,6 @@ class Timer extends Component {
 
   resetTimer(){
     this.setState({minutes: 0, seconds: 0})
-    clearInterval(this.timer)
   }
 
   render() {
