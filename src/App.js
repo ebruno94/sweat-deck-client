@@ -43,7 +43,7 @@ class App extends Component {
         <Router>
           <div style={AppStyle.container}>
             <Route exact path='/' render={(props)=> <Welcome {...props} onSignIn={this.handleSignIn}/>}></Route>
-            <Route exact path='/deck' component={Deck}></Route>
+            <Route exact path='/deck' render={()=> <Deck/>}></Route>
             <Route exact path='/register' render={() => <Register onRegister={this.handleRegistration}/>}></Route>
           </div>
         </Router>
