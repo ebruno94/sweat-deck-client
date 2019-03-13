@@ -19,7 +19,23 @@ const mainHover = { ...main,
   cursor: "pointer"
 }
 
+const timer = {
+  ...main,
+  width: '75px',
+  height: '50px',
+  letterSpacing: '2px',
+  fontSize: '20px'
+}
+
+const timerHover = {
+  ...timer,
+  boxShadow: "0px 0px 10px white",
+  cursor: "pointer"
+}
+
 export const ButtonStyle = {
   main,
   mainHover,
+  timer,
+  timerHover
 }
