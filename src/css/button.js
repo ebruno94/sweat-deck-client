@@ -33,9 +33,33 @@ const timerHover = {
   cursor: "pointer"
 }
 
+const done = {
+  backgroundColor: "gray",
+  height: "50px",
+  width: "150px",
+  display: "inline",
+  margin: "auto",
+  marginTop:"20px",
+  border: "2px solid black",
+  borderRadius: "10px",
+  color: "white",
+  textDecoration: "none",
+  fontFamily: "BebasBold",
+  letterSpacing: "4px",
+  fontSize: "26px"
+}
+
+const doneHover = {
+  ...done,
+  boxShadow: "0px 0px 10px white",
+  cursor: "pointer"
+}
+
 export const ButtonStyle = {
   main,
   mainHover,
   timer,
-  timerHover
+  timerHover,
+  done,
+  doneHover
 }
