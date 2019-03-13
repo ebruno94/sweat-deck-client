@@ -55,11 +55,59 @@ const doneHover = {
   cursor: "pointer"
 }
 
+const yes = {
+  backgroundColor: "green",
+  height: "50px",
+  width: "150px",
+  display: "inline",
+  margin: "auto",
+  marginTop:"20px",
+  border: "2px solid black",
+  borderRadius: "10px",
+  color: "white",
+  textDecoration: "none",
+  fontFamily: "BebasBold",
+  letterSpacing: "4px",
+  fontSize: "26px"
+}
+
+const yesHover = {
+  ...yes,
+  boxShadow: "0px 0px 10px white",
+  cursor: "pointer"
+}
+
+const no = {
+  backgroundColor: "red",
+  height: "50px",
+  width: "150px",
+  display: "inline",
+  margin: "auto",
+  marginTop:"20px",
+  border: "2px solid black",
+  borderRadius: "10px",
+  color: "white",
+  textDecoration: "none",
+  fontFamily: "BebasBold",
+  letterSpacing: "4px",
+  fontSize: "26px"
+}
+
+const noHover = {
+  ...no,
+  boxShadow: "0px 0px 10px white",
+  cursor: "pointer"
+}
+
 export const ButtonStyle = {
   main,
   mainHover,
   timer,
   timerHover,
   done,
-  doneHover
+  doneHover,
+  yes,
+  yesHover,
+  no,
+  noHover
 }
