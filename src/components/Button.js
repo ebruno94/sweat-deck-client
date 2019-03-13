@@ -9,7 +9,8 @@ class Button extends Component {
       linkTo: this.props.linkTo,
       isHovered: false,
       buttonName: this.props.buttonName,
-      type: this.props.type
+      type: this.props.type,
+      buttonFor: this.props.buttonFor
     }
     this.buttonHoverToggle = this.buttonHoverToggle.bind(this);
   };
@@ -20,7 +21,7 @@ class Button extends Component {
   }
 
   render(){
-    const { linkTo, isHovered, buttonName, type } = this.state;
+    const { linkTo, isHovered, buttonName, type, buttonFor } = this.state;
     const { buttonFunc } = this.props;
     var display;
 
@@ -32,6 +33,12 @@ class Button extends Component {
     } else if (type === 'submit'){
       display =
       <button type='submit' style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main} onMouseEnter={this.buttonHoverToggle} onMouseLeave={this.buttonHoverToggle}>{buttonName}</button>
+    } else if (buttonFor === 'timer'){
+      display = <button type='button'
+        style={(isHovered) ? ButtonStyle.timerHover : ButtonStyle.timer}
+        onMouseEnter={this.buttonHoverToggle}
+        onMouseLeave={this.buttonHoverToggle}
+        onClick={buttonFunc}>{buttonName}</button>
     } else {
       display = <button type='button'
         style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main}
