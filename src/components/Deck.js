@@ -31,7 +31,7 @@ class Deck extends Component {
     axios.get('/cards').then(res => {
       if (res.data && this.state.cards.length === 0){
         let sortedCards = res.data.map(card => ({id: card._id, imgUrl: card.imgUrl})).sort((a,b) => parseInt(a.imgUrl.slice(86,88)) - parseInt(b.imgUrl.slice(86,88)))
-        this.setState({cards: sortedCards, currentCard: res.data[0]})
+        this.setState({cards: sortedCards, currentCard: res.data[0], currentUser: this.props.user})
       }
     }).catch((e) => console.log(e));
   };
@@ -42,7 +42,6 @@ class Deck extends Component {
     var random = Math.floor(Math.random() * 26);
     var randomStartingIndex = currentCardIndex + random;
     var startingIndex = (randomStartingIndex > 52) ? randomStartingIndex % 52 : randomStartingIndex;
-    console.log(`CurrentIndex: ${currentCardIndex} Random ${random}, randStartIn ${randomStartingIndex}, startinIn ${startingIndex}`);
     this.setState({autoplayToggle: true, currentCardIndex: startingIndex})
     setTimeout(() => {
       this.setState({autoplayToggle: false});
@@ -52,11 +51,10 @@ class Deck extends Component {
   handleCardSelect(){
     const {cardSelected} = this.state
     this.setState({cardSelected: !cardSelected});
-    console.log(this.state);
   };
 
   handleWorkoutSave(time){
-    console.log('Saving..', time)
+    let user = this.state.currentUser
   }
 
   async handleCurrentCard(i){

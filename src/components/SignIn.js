@@ -33,7 +33,7 @@ class SignIn extends Component {
       if (res.data.password === this.state.password){
         this.props.onSignIn(user)
         this.setState({email: '', password: ''})
-        this.props.history.push('/deck');
+        setTimeout(() => this.props.history.push('/deck'), 1000);
       } else if (res.status === 404){
         this.setState({email: '', password: '', emailFound: false});
       }
