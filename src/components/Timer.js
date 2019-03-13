@@ -17,6 +17,7 @@ class Timer extends Component {
   }
 
   startTimer(){
+    this.props.onWorkoutStart();
     this.setState({
       isOn: true
     });

@@ -29,17 +29,23 @@ class Workout extends Component{
   constructor(props){
     super(props);
     this.state = {
+      workoutStart: false,
       workoutFinish: false,
       saveClicked: false,
       notSaveClicked: false,
     }
+    this.handleWorkoutStart = this.handleWorkoutStart.bind(this);
     this.handleWorkoutFinish = this.handleWorkoutFinish.bind(this);
     this.handleSave = this.handleSave.bind(this);
     this.handleNotSave = this.handleNotSave.bind(this);
   };
 
+  handleWorkoutStart(){
+    this.setState({workoutStart: true})
+  }
+
   handleWorkoutFinish() {
-    this.setState({workoutFinish: true});
+    this.setState({workoutFinish: true, workoutStart: false});
   };
 
   handleSave(){
@@ -54,6 +60,7 @@ class Workout extends Component{
 
   render() {
     let display;
+    let topMessage;
     if (this.state.workoutFinish){
       if (!this.state.saveClicked && !this.state.notSaveClicked){
         display = <SaveQuestion onNotSave={this.handleNotSave} onSave={this.handleSave}/>
@@ -74,12 +81,20 @@ class Workout extends Component{
       }
 
     } else {
-      display = <Timer onWorkoutFinish={this.handleWorkoutFinish}/>
+      display = <Timer onWorkoutStart={this.handleWorkoutStart} onWorkoutFinish={this.handleWorkoutFinish}/>
+    }
+
+    if (this.state.workoutStart && !this.state.workoutFinish){
+      topMessage = 'CRUSH THIS CARD!'
+    } else if (!this.state.workoutStart && !this.state.workoutFinish){
+      topMessage = 'Start the timer below to begin!'
+    } else if (!this.state.workoutStart && this.state.workoutFinish){
+      topMessage = 'Workout Finished!'
     }
 
     return (
       <div>
-        <div style={AppStyle.message}>{(!this.state.workoutFinish) ? 'Start the timer below to begin!' : 'Workout finished!'}</div>
+        <div style={AppStyle.message}>{topMessage}</div>
         <img src={this.props.currentCard.imgUrl} alt='Current Card' style={cardStyle}/>
         <div style={timerStyle}>
           {display}
