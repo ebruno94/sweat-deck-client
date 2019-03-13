@@ -49,7 +49,9 @@ class Deck extends Component {
   };
 
   handleCardSelect(){
-    this.setState({cardSelected: true});
+    const {cardSelected} = this.state
+    this.setState({cardSelected: !cardSelected});
+    console.log(this.state);
   };
 
   async handleCurrentCard(i){
@@ -111,7 +113,7 @@ class Deck extends Component {
           </div>
     } else {
       display =
-        <Workout currentCard={this.state.currentCard}/>
+        <Workout onSaveUnSave={this.handleCardSelect} currentCard={this.state.currentCard}/>
     }
 
     return(
