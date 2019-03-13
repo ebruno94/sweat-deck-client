@@ -2,15 +2,6 @@ import React, {Component} from 'react';
 
 import Button from './Button';
 
-const timerStyle = {
-  backgroundColor: 'black',
-  color: 'white',
-  height: '160px',
-  border: '5px solid black',
-  borderRadius: '0px 0px 15px 15px',
-  boxShadow: '-2px 0px 5px black'
-}
-
 class Timer extends Component {
   constructor(props){
     super(props);
@@ -22,6 +13,7 @@ class Timer extends Component {
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
+    this.handleFinish = this.handleFinish.bind(this);
   }
 
   startTimer(){
@@ -37,12 +29,16 @@ class Timer extends Component {
   }
 
   stopTimer(){
-    this.setState({isOn: false})
-    clearInterval(this.timer)
+    this.setState({isOn: false});
+    clearInterval(this.timer);
   }
 
   resetTimer(){
-    this.setState({minutes: 0, seconds: 0})
+    this.setState({minutes: 0, seconds: 0});
+  }
+
+  handleFinish(){
+    this.props.onWorkoutFinish();
   }
 
   render() {
@@ -53,11 +49,11 @@ class Timer extends Component {
                 <Button buttonFor='timer' buttonFunc={this.stopTimer} buttonName='stop'/> : null
     let reset = (!isOn) ?
                 <Button buttonFor='timer' buttonFunc={this.resetTimer} buttonName='reset'/> : null
-    let resume = (!isOn) ?
-                <Button buttonFor='timer' buttonFunc={this.startTimer} buttonName='resume'/> : null
+    let end = (!isOn) ?
+                <Button buttonFunc={this.handleFinish} buttonName='finish'/> : null
 
     return (
-      <div style={timerStyle}>
+      <div>
         <div style={{display: 'flex', justifyContent: 'center', marginBottom: '0px'}}>
           <h1 style={{marginTop: '5px', marginBottom: '0px', fontSize: '60px', letterSpacing: '4px'}}> {(minutes < 10) ? "0" + minutes : minutes} : {(seconds < 10) ? "0" + seconds : seconds} </h1>
         </div>
@@ -66,7 +62,7 @@ class Timer extends Component {
             {reset}
           </div>
           <div style={{margin: 'auto'}}>
-            {resume}
+            {end}
             {stop}
           </div>
           <div style={{margin: 'auto'}}>
