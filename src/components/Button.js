@@ -39,7 +39,13 @@ class Button extends Component {
         onMouseEnter={this.buttonHoverToggle}
         onMouseLeave={this.buttonHoverToggle}
         onClick={buttonFunc}>{buttonName}</button>
-    } else {
+    } else if (buttonName === 'finish'){
+      display = <button type='button'
+        style={(isHovered) ? ButtonStyle.doneHover  : ButtonStyle.done}
+        onMouseEnter={this.buttonHoverToggle}
+        onMouseLeave={this.buttonHoverToggle}
+        onClick={buttonFunc}>{buttonName}</button>
+    }else {
       display = <button type='button'
         style={(isHovered) ? ButtonStyle.mainHover : ButtonStyle.main}
         onMouseEnter={this.buttonHoverToggle}
