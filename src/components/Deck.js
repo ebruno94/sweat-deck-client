@@ -122,13 +122,13 @@ class Deck extends Component {
       if (this.state.displayUserInfo){
         display =
               <div>
-                <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} src="https://img.icons8.com/metro/26/000000/user-group-man-man.png"/>
+                <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} src="https://img.icons8.com/metro/26/000000/user-group-man-man.png"/ alt='User Icon'>
                 <UserInfo onLogout={this.handleLogout} user={this.state.currentUser}/>
               </div>
       } else {
         display =
             <div>
-              <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} src="https://img.icons8.com/metro/26/000000/user-group-man-man.png"/>
+              <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} alt='User Icon' src="https://img.icons8.com/metro/26/000000/user-group-man-man.png"/>
               <div style={{...AppStyle.message, marginTop: '0px'}}>{displayTop}</div>
                 <div style={AppStyle.subtitle}>{displaySub}</div>
                   <div style={CarouselStyle.carousel}>

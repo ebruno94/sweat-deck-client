@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Carousel from 'nuka-carousel';
-import Card from './Card';
 
 import {AppStyle} from './../css/app';
 import {CarouselStyle} from './../css/carousel';
