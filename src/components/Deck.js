@@ -30,13 +30,7 @@ class Deck extends Component {
   };
 
   componentDidMount(){
-    // Create API call here to fill Deck.
-    axios.get('/cards').then(res => {
-      if (res.data && this.state.cards.length === 0){
-        let sortedCards = res.data.map(card => ({id: card._id, imgUrl: card.imgUrl})).sort((a,b) => parseInt(a.imgUrl.slice(86,88)) - parseInt(b.imgUrl.slice(86,88)))
-        this.setState({cards: sortedCards, currentCard: res.data[0], currentUser: this.props.currentUser})
-      }
-    }).catch((e) => console.log(e));
+    this.setState({cards: this.props.cards, currentCard: this.props.cards[0], currentUser: this.props.currentUser})
   };
 
 

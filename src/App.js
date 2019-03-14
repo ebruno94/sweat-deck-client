@@ -13,6 +13,7 @@ class App extends Component {
     this.state = {
       signedIn: false,
       currentUser: {},
+      cards: []
     }
     this.handleRegistration = this.handleRegistration.bind(this);
     this.handleSignIn = this.handleSignIn.bind(this);
@@ -34,6 +35,18 @@ class App extends Component {
 
   handleSignIn(user){
     let newUser = user;
+    if (this.state.cards.length === 0){
+      axios.get('/startup').then(res => {
+        console.log(res.message)
+      }).catch(e => console.log(e));      
+    }
+
+    axios.get('/cards').then(res => {
+      if (res.data && this.state.cards.length === 0){
+        let sortedCards = res.data.map(card => ({id: card._id, imgUrl: card.imgUrl})).sort((a,b) => parseInt(a.imgUrl.slice(86,88)) - parseInt(b.imgUrl.slice(86,88)))
+        this.setState({cards: sortedCards});
+      };
+    }).catch((e) => console.log(e));
     this.setState({signedIn: true, currentUser: newUser})
   };
 
@@ -43,7 +56,7 @@ class App extends Component {
         <Router>
           <div style={AppStyle.container}>
             <Route exact path='/' render={(props)=> <Welcome {...props} onSignIn={this.handleSignIn}/>}></Route>
-            <Route exact path='/deck' render={(props)=> <Deck {...props} currentUser={this.state.currentUser} />}></Route>
+            <Route exact path='/deck' render={(props)=> <Deck {...props} cards={this.state.cards} currentUser={this.state.currentUser} />}></Route>
             <Route exact path='/register' render={() => <Register onRegister={this.handleRegistration}/>}></Route>
           </div>
         </Router>
