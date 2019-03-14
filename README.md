@@ -12,7 +12,7 @@ A website / program that lets users create their own account in order to use the
 
 This repo is a public repo of the Sweat Deck app I created. This is just the front-end, and the back-end will always remain private.
 
-If you want to see the app, please visit: http://fd-sweat-deck.herokuapp.com
+If you want to see the app, please visit: https://fd-sweat-deck.herokuapp.com
 
 
 ## Known Bugs
