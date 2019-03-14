@@ -122,7 +122,7 @@ class Deck extends Component {
       if (this.state.displayUserInfo){
         display =
               <div>
-                <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} src="https://img.icons8.com/metro/26/000000/user-group-man-man.png"/ alt='User Icon'>
+                <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} src="https://img.icons8.com/metro/26/000000/user-group-man-man.png" alt='User Icon'/>
                 <UserInfo onLogout={this.handleLogout} user={this.state.currentUser}/>
               </div>
       } else {
@@ -155,7 +155,7 @@ class Deck extends Component {
               {displayBottom}
             </div>
       }
-    }else{
+    } else {
       display =
         <Workout onSave={this.handleWorkoutSave} onSaveUnSave={this.handleCardSelect} currentCard={this.state.currentCard}/>
     }
