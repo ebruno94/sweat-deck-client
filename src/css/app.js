@@ -96,6 +96,25 @@ const line = {
   marginBottom: '6px'
 }
 
+const userIcon = {
+  position: 'relative',
+  left: '20px',
+  top: '20px',
+  textAlign: 'center',
+  margin: '0px',
+  backgroundColor: '#FC6000',
+  padding: '2px',
+  cursor: 'pointer',
+  borderRadius: '10px',
+  border: '1px solid black',
+  boxShadow: '0px 0px 10px white'
+}
+
+const userIconClicked = {
+  ...userIcon,
+  boxShadow: '0px 0px 10px inset black'
+}
+
 export const AppStyle = {
   container,
   footer,
@@ -106,4 +125,6 @@ export const AppStyle = {
   input,
   inputError,
   line,
+  userIcon,
+  userIconClicked
 }
