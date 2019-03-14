@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# SWEAT DECK
+#### WILL YOU PLAY? OR WILL YOU FOLD?
 
-## Available Scripts
+#### By **Ernest Bruno for SweatDeck Company (visit them at www.mysweatdeck.com)**
 
-In the project directory, you can run:
+## Description
 
-### `npm start`
+A website / program that lets users create their own account in order to use the SweatDeck™. This program allows the user to pick a card from the deck and perform the workout circuit on the selected card. While the user is working out, the program will keep track of the time it takes until the user presses the stop button. The user will also have the ability to save the workout into his/her workout history for viewing later on.
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Setup/Installation Requirements
 
-### `npm test`
+This repo is a public repo of the Sweat Deck app I created. This is just the front-end, and the back-end will always remain private.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If you want to see the app, please visit: http://fd-sweat-deck.herokuapp.comments
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Known Bugs
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+* The deck of cards / card is not visible when first logging in and viewing /deck route, and the user must interact with two of the buttons shown in the app: user info button on top left, random button in order to see the card. Alternatively, the user can also nudge the window size by a bit and it will also cause the cards to appear.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Technologies Used
+* HTML
+* CSS
+* Javascript
+* React
+* MongoDB
+* Node.js
+* Express
+* Nuka-Carousel library
 
-### `npm run eject`
+## Support and contact details
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+_Email me @ ernest.bruno94@yahoo.com for questions, comments, or concerns._
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### License
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+*{This software is licensed under the MIT license and everything in here is licensed under SweatDeck™}*
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Copyright (c) 2019 **_{Ernest Bruno & www.mysweatdeck.com}_**
