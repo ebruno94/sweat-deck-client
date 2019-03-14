@@ -35,7 +35,6 @@ class App extends Component {
   handleSignIn(user){
     let newUser = user;
     this.setState({signedIn: true, currentUser: newUser})
-    console.log('Sign In Successful!', this.state.currentUser);
   };
 
   render() {
@@ -44,7 +43,7 @@ class App extends Component {
         <Router>
           <div style={AppStyle.container}>
             <Route exact path='/' render={(props)=> <Welcome {...props} onSignIn={this.handleSignIn}/>}></Route>
-            <Route exact path='/deck' render={()=> <Deck currUser={this.state.currentUser} />}></Route>
+            <Route exact path='/deck' render={(props)=> <Deck {...props} currentUser={this.state.currentUser} />}></Route>
             <Route exact path='/register' render={() => <Register onRegister={this.handleRegistration}/>}></Route>
           </div>
         </Router>
