@@ -5,6 +5,7 @@ import axios from 'axios';
 import Card from './Card';
 import Button from './Button';
 import Workout from './Workout';
+import UserInfo from './UserInfo';
 
 import {CarouselStyle} from './../css/carousel';
 import {AppStyle} from './../css/app';
@@ -18,12 +19,14 @@ class Deck extends Component {
       autoplayToggle: false,
       currentCard: null,
       currentUser: {},
-      cardSelected: false
+      cardSelected: false,
+      displayUserInfo: false,
     }
     this.handleRandomButton = this.handleRandomButton.bind(this);
     this.handleCurrentCard = this.handleCurrentCard.bind(this);
     this.handleCardSelect = this.handleCardSelect.bind(this);
     this.handleWorkoutSave = this.handleWorkoutSave.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   };
 
   componentDidMount(){
@@ -31,7 +34,7 @@ class Deck extends Component {
     axios.get('/cards').then(res => {
       if (res.data && this.state.cards.length === 0){
         let sortedCards = res.data.map(card => ({id: card._id, imgUrl: card.imgUrl})).sort((a,b) => parseInt(a.imgUrl.slice(86,88)) - parseInt(b.imgUrl.slice(86,88)))
-        this.setState({cards: sortedCards, currentCard: res.data[0], currentUser: this.props.user})
+        this.setState({cards: sortedCards, currentCard: res.data[0], currentUser: this.props.currentUser})
       }
     }).catch((e) => console.log(e));
   };
@@ -46,15 +49,44 @@ class Deck extends Component {
     setTimeout(() => {
       this.setState({autoplayToggle: false});
     }, 1500);
+    console.log(this.state.currentUser);
   };
+
+  handleUserInfo(){
+    this.setState({displayUserInfo: !this.state.displayUserInfo});
+  }
 
   handleCardSelect(){
     const {cardSelected} = this.state
     this.setState({cardSelected: !cardSelected});
   };
 
+  handleLogout(){
+    setTimeout(() => this.props.history.push('/'), 500);
+  }
+
   handleWorkoutSave(time){
-    let user = this.state.currentUser
+    let {currentUser, currentCard} = this.state;
+    let newRecord = {
+      cardId: currentCard._id,
+      time: time,
+      imgUrl: currentCard.imgUrl
+    };
+
+    let newRecordArray = [...currentUser.workoutRecord]
+    newRecordArray.push(newRecord);
+    this.setState({
+      currentUser: {
+        ...currentUser,
+        workoutRecord: newRecordArray
+      }
+    });
+
+    axios.patch(`/users/${currentUser._id}`, {
+      workoutRecord: currentUser.workoutRecord
+    }).then((res)=>{
+      console.log('Workout Saved');
+    }).catch(e => console.log('Something went wrong', e));
   }
 
   async handleCurrentCard(i){
@@ -87,34 +119,43 @@ class Deck extends Component {
     let display;
 
     if (!this.state.cardSelected){
-      display =
-          <div>
-            <div style={AppStyle.message}>{displayTop}</div>
-              <div style={AppStyle.subtitle}>{displaySub}</div>
-                <div style={CarouselStyle.carousel}>
-                  <Carousel
-                  slideIndex={this.state.currentCardIndex}
-                  wrapAround={true}
-                  withoutControls={true}
-                  slideWidth={0.9}
-                  speed={500}
-                  cellAlign="center"
-                  animation={(!this.state.autoplayToggle) ? "zoom" : {}}
-                  easing="easeLinear"
-                  autoplay={this.state.autoplayToggle}
-                  autoplayInterval={10}
-                  afterSlide={currentIndex => this.handleCurrentCard(currentIndex)}
-                  >
-                  {this.state.cards.map((card, i) => {
-                    return (
-                      <Card key={card.id} imgUrl={card.imgUrl} index={i}/>
-                    )
-                  })}
-                  </Carousel>
-                </div>
-            {displayBottom}
-          </div>
-    } else {
+      if (this.state.displayUserInfo){
+        display =
+              <div>
+                <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} src="https://img.icons8.com/metro/26/000000/user-group-man-man.png"/>
+                <UserInfo onLogout={this.handleLogout} user={this.state.currentUser}/>
+              </div>
+      } else {
+        display =
+            <div>
+              <img style={(!this.state.displayUserInfo) ? AppStyle.userIcon : AppStyle.userIconClicked} onClick={() => this.handleUserInfo()} src="https://img.icons8.com/metro/26/000000/user-group-man-man.png"/>
+              <div style={{...AppStyle.message, marginTop: '0px'}}>{displayTop}</div>
+                <div style={AppStyle.subtitle}>{displaySub}</div>
+                  <div style={CarouselStyle.carousel}>
+                    <Carousel
+                    slideIndex={this.state.currentCardIndex}
+                    wrapAround={true}
+                    withoutControls={true}
+                    slideWidth={0.9}
+                    speed={500}
+                    cellAlign="center"
+                    animation={(!this.state.autoplayToggle) ? "zoom" : {}}
+                    easing="easeLinear"
+                    autoplay={this.state.autoplayToggle}
+                    autoplayInterval={10}
+                    afterSlide={currentIndex => this.handleCurrentCard(currentIndex)}
+                    >
+                    {this.state.cards.map((card, i) => {
+                      return (
+                        <Card key={card.id} imgUrl={card.imgUrl} index={i}/>
+                      )
+                    })}
+                    </Carousel>
+                  </div>
+              {displayBottom}
+            </div>
+      }
+    }else{
       display =
         <Workout onSave={this.handleWorkoutSave} onSaveUnSave={this.handleCardSelect} currentCard={this.state.currentCard}/>
     }
