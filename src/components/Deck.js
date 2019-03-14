@@ -30,7 +30,14 @@ class Deck extends Component {
   };
 
   componentDidMount(){
-    this.setState({cards: this.props.cards, currentCard: this.props.cards[0], currentUser: this.props.currentUser})
+    axios.get('/cards').then(res => {
+      if (res.data && this.state.cards.length === 0){
+        console.log(res);
+        let sortedCards = res.data.map(card => ({id: card._id, imgUrl: card.imgUrl})).sort((a,b) => parseInt(a.imgUrl.slice(86,88)) - parseInt(b.imgUrl.slice(86,88)))
+        console.log(sortedCards);
+        this.setState({cards: sortedCards, currentCard: sortedCards[0], currentUser: this.props.currentUser})
+      };
+    }).catch((e) => console.log(e));
   };
 
 
